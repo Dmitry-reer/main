@@ -1,12 +1,25 @@
+# make -f Makefile2
+# make -f Makefile2 test
+# make -f Makefile2 clean
+
 CC=gcc
 
-all: main
+all: main test
 
-main: main.c
-	$(CC) -o main main.c
+main: src/main.c
+	$(CC) -o main src/main.c
+
+test: test.o
+	gcc obj2/test.o -o test
 	
-test.o: test.c
-	$(CC) -c test.c -o test.o
+test.o: src2/test.c
+# -c — флаг компилятора,
+# который указывает выполнить только компиляцию и ассемблирование кода,
+# без этапа линковки (связывания) в готовый исполняемый файл.
+
+# -o — флаг компилятора, после которого указывается имя выходного файла.
+	mkdir -p obj2
+	$(CC) -c src2/test.c -o obj2/test.o
 	
 clean:
-	rm main test test.o
+	@rm -rf main test test.o obj2
